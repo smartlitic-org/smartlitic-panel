@@ -435,4 +435,4 @@ function smartlitic(api_key) {
   document.addEventListener('click', straightCmpHandler);
 }
 
-smartlitic('cb666d0e-aa13-46db-920f-9daeb26ee38e');
+// smartlitic('a1ad16e9cc2113b4fa5cf6d2a118e0ce2b958f3c6caa1c03c249f6d678a4d667');
