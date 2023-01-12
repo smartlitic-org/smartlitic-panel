@@ -1,7 +1,7 @@
 // import FingerprintJS from '@fingerprintjs/fingerprintjs';
 // import { componentData, BaseData } from './model/data.model';
-import CssClass from './smartliticStyles.js';
-import { selectionUI, emojiSectionUI, toggleBtnUI, resultRateUI, primaryText, errorText, toggleBtnOff, toggleBtnOn, loaderUI } from '../view/feedback.js';
+// import CssClass from './smartliticStyles.js';
+import { selectionUI, emojiSectionUI, resultRateUI, primaryText, errorText, toggleBtnOff, toggleBtnOn, loaderUI } from '../view/feedback.js';
 import { Api, _result, progress } from '../service/api.js';
 
 let apiKey;
@@ -15,7 +15,8 @@ let clientUUID;
 let btnValue = false;
 let clientComment;
 let pointerDom;
-const toggleButton = document.createElement("Button");
+let Href = [];
+const toggleButton = document.querySelector(".toggle-btn");
 const feedbackSec = document.createElement('div');
 const commentSec = document.createElement('textarea');
 const submitBtn = document.createElement('button');
@@ -58,6 +59,7 @@ const getFingerPrintID = () => {
     .then(async fp => await fp.get())
     .then(result => {
       clientUUID = result.visitorId;
+      setGenerateData();
       Api(generalData, apiKey);
     })
 }
@@ -80,11 +82,28 @@ const toggleBtnValueChange = () => {
 
 const toggleBtnTextHandler = () => {
   if(btnValue){
+    disableHref()
+    document.querySelector('#main-selector').style = "display:block;"
+    document.querySelectorAll('.smartlitic-component').forEach(el =>{
+      el.style = 'z-index: 11 !important'
+    })
     toggleBtnText.innerHTML = toggleBtnOn;
   } else{
+    document.querySelector('#main-selector').style = "display:none;"
     toggleBtnText.innerHTML = toggleBtnOff;
+    document.querySelectorAll("[href='javascript:;']").forEach((a, i) =>  a.href = Href[i])
   }
 }
+
+const disableHref = () => {
+  document.querySelectorAll('a').forEach(a => {
+    if(a.getAttribute('href') && detectTargetCmp(a)){
+      Href.push(a.getAttribute('href'))
+      a.href = 'javascript:;'
+    }
+  })
+}
+
 
 const closeFeedbackSection = () => {
   if(pointerDom){
@@ -330,10 +349,11 @@ const mouseOutHandler = (event) => {
   if (btnValue && detectTargetCmp(event.target)) event.target.style = null;
 }
 
-const targetCmpHandler = (event) => { 
+const targetCmpHandler = (event) => {
   if (btnValue && detectTargetCmp(event.target)) {
+    console.log(event);
     pointerDom = event;
-    pointerDom.target.style = 'border:3px solid #21CF8E;transition:border 200ms; border-radius:5px;position:relative';
+    pointerDom.target.style = 'border:3px solid #21CF8E;transition:border 200ms; border-radius:5px;position:relative z-index:10';
     targetCmpAction(pointerDom.target);
     stopMouseEvent();
     selectionBtn.disabled = true;
@@ -394,13 +414,6 @@ const stopMouseEvent = () => {
   toggleBtnValueChange();
 }
 
-const initStyleLink = () => {
-  let style = document.createElement('style');
-  style.innerHTML = CssClass();
-  document.head.appendChild(style);
-}
-
-
 function smartlitic(api_key) {
   apiKey = api_key;
   if (apiKey) {
@@ -421,18 +434,11 @@ function smartlitic(api_key) {
   } else {
     console.log('api_key is not set')
   }
-
-  window.onload = () => {
-    initStyleLink();
-    toggleButton.innerHTML = toggleBtnUI;
-    toggleButton.classList.add('toggle-btn');
-    document.body?.appendChild(toggleButton);
-    toggleButton.addEventListener('click', generateFeedbackSection);
-  }
+  toggleButton.addEventListener('click', generateFeedbackSection);
   document.addEventListener('mouseover', mouseOverHandler);
   document.addEventListener('mouseout', mouseOutHandler);
   document.addEventListener('click', targetCmpHandler);
   document.addEventListener('click', straightCmpHandler);
 }
 
-smartlitic('cb666d0e-aa13-46db-920f-9daeb26ee38e');
+smartlitic('a1ad16e9cc2113b4fa5cf6d2a118e0ce2b958f3c6caa1c03c249f6d678a4d667');
