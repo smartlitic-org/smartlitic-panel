@@ -1,6 +1,4 @@
-// import FingerprintJS from '@fingerprintjs/fingerprintjs';
-// import { componentData, BaseData } from './model/data.model';
-// import CssClass from './smartliticStyles.js';
+
 import { selectionUI, emojiSectionUI, resultRateUI, primaryText, errorText, toggleBtnOff, toggleBtnOn, loaderUI } from '../view/feedback.js';
 import { Api, _result, progress } from '../service/api.js';
 
@@ -351,7 +349,6 @@ const mouseOutHandler = (event) => {
 
 const targetCmpHandler = (event) => {
   if (btnValue && detectTargetCmp(event.target)) {
-    console.log(event);
     pointerDom = event;
     pointerDom.target.style = 'border:3px solid #21CF8E;transition:border 200ms; border-radius:5px;position:relative z-index:10';
     targetCmpAction(pointerDom.target);

@@ -1,9 +1,3 @@
-const toggleButton = document.createElement("Button");
-const feedbackSec = document.createElement('div');
-const commentSec = document.createElement('textarea');
-const submitBtn = document.createElement('button');
-
-
   export const primaryText = `<p class="text">How would you rate your experience?</p>`
   export const errorText = `<p class="text error">something went wrong, try again!</p>`
   export const toggleBtnOn = `<p class="success">Select Component: On</p>`

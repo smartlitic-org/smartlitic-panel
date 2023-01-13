@@ -1848,3 +1848,11 @@ button:focus {
 .footer-logo {
   float: right;
 }
+
+.npm-code{
+  background-color: #eee;
+  padding: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
